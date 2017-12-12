@@ -27,27 +27,6 @@ class NeuralNetwork(object):
     def fit(self, X, Y, iterations=2000, learning_rate=0.01):
         for i in range(iterations):
             z, a = self.forward(X)
-            
-            # output layer
-#            prevDeltan = np.multiply((a[-1] - Y), self.sigmoid_prime(z[-1]))
-#            delta_weighted = np.dot(a[-2].T, prevDeltan)
-#            
-#            rateOfChange = learning_rate * delta_weighted
-#            self.W[-1] -= rateOfChange
-            
-            # hidden layers
-#            for n in range(len(self.W)-1, 0, -1):
-#                c = np.dot(prevDeltan, self.W[n].T) # should these be the other way round? transpose?
-#                deltan = np.multiply(c, self.sigmoid_prime(z[n]))
-#                self.W[n] -= np.dot(deltan, a[n-1].T)
-#                prevDeltan = deltan
-                
-            #print(len(self.layer_sizes)-2)
-#            for n in range(len(self.layer_sizes)-2, 1, -1):
-#                c = np.dot(prevDeltan, self.W[n].T) # following weights
-#                deltan = np.multiply(c, self.sigmoid_prime(z[n]))
-#                self.W[n] -= np.dot(deltan, a[n-1].T)
-#                prevDeltan = deltan
 
             deltaNPlus1 = np.multiply((a[-1] - Y), self.sigmoid_prime(z[-1]))
             rateOfChange = np.dot(a[-2].T, deltaNPlus1)
@@ -59,19 +38,7 @@ class NeuralNetwork(object):
                                 self.sigmoid_prime(z[n])
                                 )
 
-                #print(a[-2].shape, deltaNPlus1.shape, rateOfChange.shape)
-                #print()
-                #print(a[n-1].T.shape, n-1) ##### acts line n-1
-                c = np.dot(a[n].T, deltaN)
-                #print(deltaNPlus1.shape,
-                #      self.W[n+1].T.shape,
-                #      np.dot(deltaNPlus1, self.W[n+1].T).shape,
-                #      self.sigmoid_prime(z[n]).shape,
-                #      deltaN.shape
-                #      )
-                #print(c.shape, self.W[n].shape)
-                #print()
-                #print(n)
+                c = np.dot(a[n].T, deltaN) # acts line n-1
                 self.W[n] -= learning_rate * c
                 deltaNPlus1 = deltaN
             
@@ -112,5 +79,3 @@ class Examples(NeuralNetwork):
             if i == 2:
                 print('Virginica')
 Examples.iris()
-
-# Finally got working on 12/12/2017 at around 16:52

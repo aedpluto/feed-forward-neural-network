@@ -47,35 +47,35 @@ class NeuralNetwork(object):
         return self.forward(X)[1][-1]
     
 
-class Examples(NeuralNetwork):
-    def iris(iterations=25000, learning_rate=0.001, model=(4,4,4,3)):
-        # preprocessing
-        iris = datasets.load_iris()
-        X = np.concatenate((iris.data[:48], iris.data[50:98], iris.data[100:148]), axis=0)
-        test = np.concatenate((iris.data[48:50], iris.data[98:100], iris.data[148:150]), axis=0)
-    
-        Y = []
-        options = [[1,0,0],[0,1,0],[0,0,1]]
-        for c in range(3):
-            for i in range(int(len(X)/3)):
-                Y.append(options[c])
-        Y = np.array(Y)
-    
-        # initialize
-        NN = NeuralNetwork(model)
-    
-        # training
-        NN.fit(X, Y, iterations, learning_rate)
-    
-        # testing
-        hypothesis = NN.predict(test)
-        for line in hypothesis:
-            l = [line[0], line[1], line[2]]
-            i = l.index(max(l))
-            if i == 0:
-                print('Setosa')
-            if i == 1:
-                print('Versicolor')
-            if i == 2:
-                print('Virginica')
+def iris(iterations=25000, learning_rate=0.001, model=(4,4,4,3)):
+    # preprocessing
+    iris = datasets.load_iris()
+    X = np.concatenate((iris.data[:48], iris.data[50:98], iris.data[100:148]), axis=0)
+    test = np.concatenate((iris.data[48:50], iris.data[98:100], iris.data[148:150]), axis=0)
+
+    Y = []
+    options = [[1,0,0],[0,1,0],[0,0,1]]
+    for c in range(3):
+        for i in range(int(len(X)/3)):
+            Y.append(options[c])
+    Y = np.array(Y)
+
+    # initialize
+    NN = NeuralNetwork(model)
+
+    # training
+    NN.fit(X, Y, iterations, learning_rate)
+
+    # testing
+    hypothesis = NN.predict(test)
+    for line in hypothesis:
+        l = [line[0], line[1], line[2]]
+        i = l.index(max(l))
+        if i == 0:
+            print('Setosa')
+        if i == 1:
+            print('Versicolor')
+        if i == 2:
+            print('Virginica')
+
 Examples.iris()

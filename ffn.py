@@ -78,4 +78,4 @@ def iris(iterations=25000, learning_rate=0.001, model=(4,4,4,3)):
         if i == 2:
             print('Virginica')
 
-Examples.iris()
+iris()
